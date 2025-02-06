@@ -1,4 +1,3 @@
-# smart-attendance-system
 import cv2
 import face_recognition
 import os
@@ -7,26 +6,26 @@ from datetime import datetime
 import time
 import pyttsx3  # Import the pyttsx3 library for TTS
 
-# Initialize TTS engine
+    # Initialize TTS engine
 engine = pyttsx3.init()
 engine.setProperty('rate', 150)  # Adjust speech rate (default is 200)
 voices = engine.getProperty('voices')
 engine.setProperty('voice', voices[0].id)  # Set to male voice (typically index 0)
 
 
-# Function to speak a message
+    # Function to speak a message
 def speak(message):
     engine.setProperty('volume', 1.0)
     engine.say(message)
     engine.runAndWait()
 
 
-# Define paths
+        # Define paths
 students_folder = r"C:\Users\HP\Desktop\students"
 attendance_folder = r"C:\Users\HP\Desktop\attendence"  # Folder for attendance file
 attendance_file = os.path.join(attendance_folder, "attendance.csv")  # Full file path
 
-# Ensure attendance directory exists
+    # Ensure attendance directory exists
 if not os.path.exists(attendance_folder):
     os.makedirs(attendance_folder)
     print(f"Directory '{attendance_folder}' created.")
@@ -34,7 +33,7 @@ else:
     print(f"Directory '{attendance_folder}' already exists.")
 
 
-# Load student images and encode them (cache face encodings)
+    # Load student images and encode them (cache face encodings)
 def load_student_images(folder_path):
     student_images = []
     student_names = []
@@ -53,7 +52,7 @@ def load_student_images(folder_path):
     return student_images, student_names
 
 
-# Mark attendance in the CSV file with morning/evening distinction
+    # Mark attendance in the CSV file with morning/evening distinction
 def mark_attendance(name, df):
     columns = ["Name", "Date", "Morning Time", "Evening Time"]
     now = datetime.now()
@@ -93,7 +92,7 @@ def mark_attendance(name, df):
     return df
 
 
-# View today's attendance
+    # View today's attendance
 def view_todays_attendance(df):
     now = datetime.now()
     attendance_date = now.strftime("%Y-%m-%d")
@@ -108,7 +107,7 @@ def view_todays_attendance(df):
         speak("No attendance recorded today.")
 
 
-# View attendance for a specific date
+    # View attendance for a specific date
 def view_attendance_for_date(df):
     date_input = input("Enter the date to view attendance (YYYY-MM-DD): ")
     attendance_data = df[df["Date"] == date_input]
@@ -122,7 +121,7 @@ def view_attendance_for_date(df):
         speak(f"No attendance found for {date_input}.")
 
 
-# Count the number of classes attended by each student
+    # Count the number of classes attended by each student
 def count_classes_attended(df):
     student_attendance = df.groupby("Name").size()
 
@@ -136,7 +135,7 @@ def count_classes_attended(df):
             print(f"{student}: {classes_attended} classes attended")
 
 
-# Enroll a new student
+    # Enroll a new student
 def enroll_new_student(student_images, student_names):
     print("📷 Please position the student in front of the camera.")
     # Replace with the URL of your mobile camera stream (IP Webcam)
@@ -228,8 +227,9 @@ def enroll_new_student(student_images, student_names):
         cap.release()
         cv2.destroyAllWindows()
 
-# Capture and process attendance (with resized camera display)
-# Capture and process attendance (with resized camera display)
+
+    # Capture and process attendance (with resized camera display)
+    # Capture and process attendance (with resized camera display)
 def capture_and_process_attendance():
     student_images, student_names = load_student_images(students_folder)
     # Ensure the CSV contains the "Date" column and load or create it
